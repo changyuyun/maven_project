@@ -29,4 +29,18 @@ public class UserDaoImpl implements UserDao {
 
         return user;
     }
+
+    @Override
+    public User findByUsernameAndPassword(String username, String password) {
+        String sql = "select * from tab_user where username=? and password=?";
+
+        User user = null;
+        try {
+            user = template.queryForObject(sql, new BeanPropertyRowMapper<User>(User.class),
+                    username, password);
+        } catch (Exception e) {
+        }
+
+        return user;
+    }
 }

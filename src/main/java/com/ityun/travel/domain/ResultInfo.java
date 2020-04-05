@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class ResultInfo implements Serializable {
     private boolean flag;
     private Object data = null;
-    private String errorMsg;
+    private String msg;
 
     public ResultInfo() {
     }
@@ -19,15 +19,15 @@ public class ResultInfo implements Serializable {
         this.flag = flag;
     }
 
-    public ResultInfo(boolean flag, String errorMsg) {
+    public ResultInfo(boolean flag, String msg) {
         this.flag = flag;
-        this.errorMsg = errorMsg;
+        this.msg = msg;
     }
 
-    public ResultInfo(boolean flag, Object data, String errorMsg) {
+    public ResultInfo(boolean flag, Object data, String msg) {
         this.flag = flag;
         this.data = data;
-        this.errorMsg = errorMsg;
+        this.msg = msg;
     }
 
     public boolean isFlag() {
@@ -46,11 +46,11 @@ public class ResultInfo implements Serializable {
         this.data = data;
     }
 
-    public String getErrorMsg() {
-        return errorMsg;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

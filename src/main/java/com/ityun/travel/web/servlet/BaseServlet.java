@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -43,17 +44,27 @@ public class BaseServlet extends HttpServlet {
         return mapper.writeValueAsString(obj);
     }
 
-    public void responseWithJson(HttpServletResponse response, boolean flag, String errorMsg, Object data) throws IOException {
+    public void responseWithJson(HttpServletResponse response, boolean flag, String msg, Object data) throws IOException {
         response.setContentType("application/json;charset=utf-8");
         ResultInfo resultInfo = new ResultInfo();
         resultInfo.setFlag(flag);
-        if (errorMsg != null) {
-            resultInfo.setErrorMsg(errorMsg);
+        if (msg != null) {
+            resultInfo.setMsg(msg);
         }
         if (data != null) {
             resultInfo.setData(data);
         }
         String json = writeValueAsString(resultInfo);
         response.getWriter().write(json);
+    }
+
+    public boolean checkCheckCode(HttpServletRequest request, HttpServletResponse response, String checkCode) {
+        HttpSession session = request.getSession();
+        String checkcode_server = (String)session.getAttribute("CHECKCODE_SERVER");
+        session.removeAttribute("CHECKCODE_SERVER");
+        if (checkcode_server == null || !checkcode_server.equalsIgnoreCase(checkCode)) {
+            return false;
+        }
+        return true;
     }
 }

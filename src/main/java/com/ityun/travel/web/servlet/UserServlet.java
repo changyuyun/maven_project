@@ -15,17 +15,20 @@ import java.util.Map;
 
 @WebServlet(name = "UserServlet", urlPatterns = "/user/*")
 public class UserServlet extends BaseServlet {
+    /**
+     * 注册
+     * @param request
+     * @param response
+     * @throws IOException
+     */
     public void registerUserServlet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String check = request.getParameter("check");
         if (check == null) {
             responseWithJson(response, false, "验证码非法", null);
             return;
         }
-        //从session中获取验证码
-        HttpSession session = request.getSession();
-        String checkcode_server = (String)session.getAttribute("CHECKCODE_SERVER");
-        session.removeAttribute("CHECKCODE_SERVER");
-        if (checkcode_server == null || !checkcode_server.equalsIgnoreCase(check)) {
+        //校验验证码
+        if (!checkCheckCode(request, response, check)) {
             responseWithJson(response, false, "验证码错误", null);
             return;
         }
@@ -38,7 +41,6 @@ public class UserServlet extends BaseServlet {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
-        System.out.println(user);
 
         UserServiceImpl userService = new UserServiceImpl();
         boolean ret = userService.register(user);
@@ -47,5 +49,41 @@ public class UserServlet extends BaseServlet {
         } else {
             responseWithJson(response, false, "注册失败", null);
         }
+    }
+
+    /**
+     * 登陆
+     * @param request
+     * @param response
+     */
+    public void loginServlet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        String check = request.getParameter("check");
+        if (check == null) {
+            responseWithJson(response, false, "验证码非法", null);
+            return;
+        }
+        //校验验证码
+        if (!checkCheckCode(request, response, check)) {
+            responseWithJson(response, false, "验证码错误", null);
+            return;
+        }
+        Map<String, String[]> map = request.getParameterMap();
+        User user = new User();
+        try {
+            BeanUtils.populate(user, map);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        UserServiceImpl userService = new UserServiceImpl();
+        User ret = userService.login(user);
+        if (ret == null) {
+            responseWithJson(response, false, "用户名或密码错误", null);
+            return;
+        }
+        request.getSession().setAttribute("user", ret);
+        responseWithJson(response, true, "登陆成功", null);
     }
 }
