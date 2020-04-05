@@ -86,4 +86,31 @@ public class UserServlet extends BaseServlet {
         request.getSession().setAttribute("user", ret);
         responseWithJson(response, true, "登陆成功", null);
     }
+
+    /**
+     * 获取用户信息
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    public void getUserInfoServlet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Object user = request.getSession().getAttribute("user");
+        if (user == null) {
+            responseWithJson(response, false, "未登录", null);
+            return;
+        }
+        responseWithJson(response, true, "成功", user);
+    }
+
+    /**
+     * 退出登陆
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    public void loginOutServlet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.getSession().invalidate();
+
+        responseWithJson(response, true, "登出成功", null);
+    }
 }
