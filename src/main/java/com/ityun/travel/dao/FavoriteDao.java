@@ -4,4 +4,5 @@ import com.ityun.travel.domain.Favorite;
 
 public interface FavoriteDao {
     Favorite findOne(int uid, int rid);
+    void saveOne(int uid, int rid);
 }

@@ -110,13 +110,11 @@ public class RouteServlet extends BaseServlet {
      * @throws IOException
      */
     public void isFavorite(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        /*int uid = getCurrentUserId(request, response);
-        System.out.println(uid);*/
-        /*if (uid == 0) {
+        int uid = getCurrentUserId(request, response);
+        if (uid == 0) {
             responseWithJson(response, false, "未登录", null);
             return;
-        }*/
-        int uid = 1;
+        }
         String ridStr = request.getParameter("rid");
         if (ridStr == null || ridStr.length() <= 0) {
             responseWithJson(response, false, "param rid error", null);
@@ -139,12 +137,19 @@ public class RouteServlet extends BaseServlet {
      * @throws IOException
      */
     public void favorite(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int uid = getCurrentUserId(request, response);
+        if (uid == 0) {
+            responseWithJson(response, false, "未登录", null);
+            return;
+        }
         String ridStr = request.getParameter("rid");
         if (ridStr == null || ridStr.length() <= 0) {
             responseWithJson(response, false, "param rid error", null);
             return;
         }
         int rid = Integer.parseInt(ridStr);
-
+        FavoriteServiceImpl favoriteService = new FavoriteServiceImpl();
+        favoriteService.saveFavorite(uid, rid);
+        responseWithJson(response, true, "收藏成功", null);
     }
 }

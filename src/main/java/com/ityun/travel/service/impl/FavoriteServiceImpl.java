@@ -18,4 +18,9 @@ public class FavoriteServiceImpl implements FavoriteService {
         }
         return true;
     }
+
+    @Override
+    public void saveFavorite(int uid, int rid) {
+        favoriteDao.saveOne(uid, rid);
+    }
 }

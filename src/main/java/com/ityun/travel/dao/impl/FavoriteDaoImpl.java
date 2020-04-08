@@ -8,6 +8,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.Date;
+
 public class FavoriteDaoImpl implements FavoriteDao {
     JdbcTemplate template = new JdbcTemplate(JDBCUtils.getDataSource());
     @Override
@@ -20,5 +22,11 @@ public class FavoriteDaoImpl implements FavoriteDao {
             return null;
         }
         return favorite;
+    }
+
+    @Override
+    public void saveOne(int uid, int rid) {
+        String sql = "insert into tab_favorite values(?,?,?)";
+        template.update(sql, rid, new Date(), uid);
     }
 }
