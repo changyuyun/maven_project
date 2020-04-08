@@ -2,6 +2,7 @@ package com.ityun.travel.web.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ityun.travel.domain.ResultInfo;
+import com.ityun.travel.domain.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -66,5 +67,14 @@ public class BaseServlet extends HttpServlet {
             return false;
         }
         return true;
+    }
+    
+    public int getCurrentUserId(HttpServletRequest request, HttpServletResponse response) {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            return 0;
+        }
+        int uid = user.getUid();
+        return uid;
     }
 }

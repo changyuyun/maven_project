@@ -1,6 +1,7 @@
 package com.ityun.travel.service.impl;
 
 import com.ityun.travel.dao.impl.RouteDaoImpl;
+import com.ityun.travel.domain.Route;
 import com.ityun.travel.service.RouteService;
 
 import java.util.List;
@@ -15,5 +16,10 @@ public class RouteServiceImpl implements RouteService {
     @Override
     public int count(int cid, String routeName) {
         return routeDao.count(cid, routeName);
+    }
+
+    @Override
+    public Route findOne(int rid) {
+        return routeDao.findOne(rid);
     }
 }
