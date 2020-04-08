@@ -33,20 +33,20 @@
 
         function load(cid, currentPage, rname) {
             //发送ajax请求，请求route/pageQuery,传递cid
-            $.get("route/pageQuery", {cid: cid, currentPage: currentPage, rname: rname}, function (pb) {
+            $.get("route/routeList", {cid: cid, currentPage: currentPage, routeName: rname}, function (pb) {
                 //解析pagebean数据，展示到页面上
 
                 //1.分页工具条数据展示
                 //1.1 展示总页码和总记录数
-                $("#totalPage").html(pb.totalPage);
-                $("#totalCount").html(pb.totalCount);
+                $("#totalPage").html(pb.data.totalPage);
+                $("#totalCount").html(pb.data.totalCount);
 
                 var lis = "";
 
                 var fristPage = '<li onclick="javascipt:load(' + cid + ',1,\'' + rname + '\')"><a href="javascript:void(0)">首页</a></li>';
 
                 //计算上一页的页码
-                var beforeNum = pb.currentPage - 1;
+                var beforeNum = pb.data.currentPage - 1;
                 if (beforeNum <= 0) {
                     beforeNum = 1;
                 }
@@ -68,16 +68,16 @@
 
 
                 //1.要显示10个页码
-                if (pb.totalPage < 10) {
+                if (pb.data.totalPage < 10) {
                     //总页码不够10页
 
                     begin = 1;
-                    end = pb.totalPage;
+                    end = pb.data.totalPage;
                 } else {
                     //总页码超过10页
 
-                    begin = pb.currentPage - 5;
-                    end = pb.currentPage + 4;
+                    begin = pb.data.currentPage - 5;
+                    end = pb.data.currentPage + 4;
 
                     //2.如果前边不够5个，后边补齐10个
                     if (begin < 1) {
@@ -86,8 +86,8 @@
                     }
 
                     //3.如果后边不足4个，前边补齐10个
-                    if (end > pb.totalPage) {
-                        end = pb.totalPage;
+                    if (end > pb.data.totalPage) {
+                        end = pb.data.totalPage;
                         begin = end - 9;
                     }
                 }
@@ -95,7 +95,7 @@
                 for (var i = begin; i <= end; i++) {
                     var li;
                     //判断当前页码是否等于i
-                    if (pb.currentPage == i) {
+                    if (pb.data.currentPage == i) {
                         li = '<li class="curPage" onclick="javascipt:load(' + cid + ',' + i + ',\'' + rname + '\')"><a href="javascript:void(0)">' + i + '</a></li>';
                     } else {
                         //创建页码的li
@@ -105,9 +105,9 @@
                     lis += li;
                 }
 
-                var nextNum = pb.currentPage + 1;
+                var nextNum = pb.data.currentPage + 1;
                 var nextPage = '<li onclick="javascipt:load(' + cid + ',' + nextNum + ',\'' + rname + '\')" class="threeword"><a href="javascript:void(0)">下一页</a></li>';
-                var lastPage = '<li onclick="javascipt:load(' + cid + ',' + pb.totalPage + ',\'' + rname + '\')" class="threeword"><a href="javascript:void(0)">末页</a></li>';
+                var lastPage = '<li onclick="javascipt:load(' + cid + ',' + pb.data.totalPage + ',\'' + rname + '\')" class="threeword"><a href="javascript:void(0)">末页</a></li>';
 
                 lis += nextPage;
                 lis += lastPage;
@@ -119,9 +119,9 @@
                 //2.列表数据展示
                 var route_lis = "";
 
-                for (var i = 0; i < pb.list.length; i++) {
+                for (var i = 0; i < pb.data.list.length; i++) {
                     //获取{rid:1,rname:"xxx"}
-                    var route = pb.list[i];
+                    var route = pb.data.list[i];
 
                     var li = '<li>\n' +
         '                        <div class="img"><img src="' + route.rimage + '" style="width: 299px;"></div>\n' +

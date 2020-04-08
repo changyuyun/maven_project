@@ -195,27 +195,27 @@
     $(function () {
         //1.获取rid
         var rid = getParameter("rid");
-        //2.发送请求请求 route/findOne
-        $.get("route/findOne", {rid: rid}, function (route) {
+        //2.发送请求请求 route/routeInfo
+        $.get("route/routeInfo", {rid: rid}, function (route) {
             //3.解析数据填充html
-            $("#rname").html(route.rname);
-            $("#routeIntroduce").html(route.routeIntroduce);
-            $("#price").html('￥' + route.price);
-            $("#sname").html(route.seller.sname);
-            $("#consphone").html(route.seller.consphone);
-            $("#address").html(route.seller.address);
-            $("#favoriteCount").html("已收藏" + route.count + "次");
+            $("#rname").html(route.data.rname);
+            $("#routeIntroduce").html(route.data.routeIntroduce);
+            $("#price").html('￥' + route.data.price);
+            $("#sname").html(route.data.seller.sname);
+            $("#consphone").html(route.data.seller.consphone);
+            $("#address").html(route.data.seller.address);
+            $("#favoriteCount").html("已收藏" + route.data.count + "次");
 
             var ddstr = '<a class="up_img up_img_disable"></a>';
-            for (var i = 0; i < route.routeImgList.length; i++) {
+            for (var i = 0; i < route.data.routeImgList.length; i++) {
                 var astr;
                 if (i >= 4) {
-                    astr = '<a title="" class="little_img" data-bigpic="' + route.routeImgList[i].bigPic + '" style="display:none;">\n' +
-                        '         <img src="' + route.routeImgList[i].smallPic + '">\n' +
+                    astr = '<a title="" class="little_img" data-bigpic="' + route.data.routeImgList[i].bigPic + '" style="display:none;">\n' +
+                        '         <img src="' + route.data.routeImgList[i].smallPic + '">\n' +
                         '   </a>';
                 } else {
-                    astr = '<a title="" class="little_img" data-bigpic="' + route.routeImgList[i].bigPic + '">\n' +
-                        '         <img src="' + route.routeImgList[i].smallPic + '">\n' +
+                    astr = '<a title="" class="little_img" data-bigpic="' + route.data.routeImgList[i].bigPic + '">\n' +
+                        '         <img src="' + route.data.routeImgList[i].smallPic + '">\n' +
                         '   </a>';
                 }
                 ddstr += astr;
@@ -229,8 +229,8 @@
 
     $(function () {
         var rid = getParameter("rid");
-        $.get("route/isFavorite", {rid: rid}, function (flag) {
-            if (flag) {
+        $.get("route/isFavorite", {rid: rid}, function (data) {
+            if (data.flag) {
                 //用户已经收藏
                 //<a class="btn already" disabled="disabled">
                 $("#favorite").addClass("already");

@@ -1,5 +1,7 @@
 package com.ityun.travel.domain;
 
+import java.util.List;
+
 /**
  * route实体类
  */
@@ -17,10 +19,15 @@ public class Route {
     private int sid;
     private int sourceId;
 
+
+    private Category category;
+    private Seller seller;
+    private List<RouteImg> routeImgList;
+
     public Route() {
     }
 
-    public Route(int rid, String rname, Double price, String routeIntroduce, String rflag, String rdate, String isThemeTour, int count, int cid, String rimage, int sid, int sourceId) {
+    public Route(int rid, String rname, Double price, String routeIntroduce, String rflag, String rdate, String isThemeTour, int count, int cid, String rimage, int sid, int sourceId, Category category, Seller seller, List<RouteImg> routeImgList) {
         this.rid = rid;
         this.rname = rname;
         this.price = price;
@@ -33,6 +40,9 @@ public class Route {
         this.rimage = rimage;
         this.sid = sid;
         this.sourceId = sourceId;
+        this.category = category;
+        this.seller = seller;
+        this.routeImgList = routeImgList;
     }
 
     public int getRid() {
@@ -131,6 +141,30 @@ public class Route {
         this.sourceId = sourceId;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public void setSeller(Seller seller) {
+        this.seller = seller;
+    }
+
+    public List<RouteImg> getRouteImgList() {
+        return routeImgList;
+    }
+
+    public void setRouteImgList(List<RouteImg> routeImgList) {
+        this.routeImgList = routeImgList;
+    }
+
     @Override
     public String toString() {
         return "Route{" +
@@ -146,6 +180,9 @@ public class Route {
                 ", rimage='" + rimage + '\'' +
                 ", sid=" + sid +
                 ", sourceId=" + sourceId +
+                ", category=" + category +
+                ", seller=" + seller +
+                ", routeImgList=" + routeImgList +
                 '}';
     }
 }

@@ -29,7 +29,7 @@ public class RouteServlet extends BaseServlet {
         String pageSizeStr = request.getParameter("pageSize");
         String cidStr = request.getParameter("cid");
         String routeName = request.getParameter("routeName");
-        if (routeName.length() > 0) {
+        if (routeName != null && routeName.length() > 0) {
             // 中文乱码
             routeName = new String(routeName.getBytes("iso8859-1"), "utf-8");
         }
@@ -42,11 +42,8 @@ public class RouteServlet extends BaseServlet {
         if (pageSizeStr != null && pageSizeStr.length() > 0) {
             pageSize = Integer.parseInt(pageSizeStr);
         }
-        if (cidStr != null && cidStr.length() > 0) {
+        if (cidStr != null && cidStr.length() > 0 && !"null".equals(cidStr)) {
             cid = Integer.parseInt(cidStr);
-        } else {
-            responseWithJson(response, false, "cid is error", null);
-            return;
         }
 
         RouteServiceImpl routeService = new RouteServiceImpl();

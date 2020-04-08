@@ -1,7 +1,10 @@
 package com.ityun.travel.service.impl;
 
 import com.ityun.travel.dao.impl.RouteDaoImpl;
+import com.ityun.travel.dao.impl.RouteImgDaoImpl;
+import com.ityun.travel.dao.impl.SellerDaoImpl;
 import com.ityun.travel.domain.Route;
+import com.ityun.travel.domain.Seller;
 import com.ityun.travel.service.RouteService;
 
 import java.util.List;
@@ -20,6 +23,17 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public Route findOne(int rid) {
-        return routeDao.findOne(rid);
+
+        Route route = routeDao.findOne(rid);
+
+        RouteImgDaoImpl routeImgDao = new RouteImgDaoImpl();
+        SellerDaoImpl sellerDao = new SellerDaoImpl();
+
+        List routeImgList = routeImgDao.getSome(rid);
+        route.setRouteImgList(routeImgList);
+
+        Seller seller = sellerDao.findBySid(route.getSid());
+        route.setSeller(seller);
+        return route;
     }
 }
