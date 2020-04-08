@@ -144,6 +144,11 @@
       <version>2.7.0</version>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>2.3.2</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -185,7 +190,7 @@
           <artifactId>tomcat7-maven-plugin</artifactId>
           <version>2.2</version>
           <configuration>
-            <port>8080</port>
+            <port>8081</port>
             <path>/travel</path>
           </configuration>
         </plugin>
