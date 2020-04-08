@@ -15,11 +15,13 @@ import java.util.List;
 @WebServlet(name = "RouteServlet", urlPatterns = "/route/*")
 public class RouteServlet extends BaseServlet {
     public void routeList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
         String currentPageStr = request.getParameter("currentPage");
         String pageSizeStr = request.getParameter("pageSize");
         String cidStr = request.getParameter("cid");
         String routeName = request.getParameter("routeName");
-
+        // 中文乱码
+        routeName = new String(routeName.getBytes("iso8859-1"), "utf-8");
         int currentPage = 1;
         int pageSize = 10;
         int cid = 0;

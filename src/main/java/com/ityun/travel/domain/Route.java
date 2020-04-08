@@ -5,7 +5,7 @@ package com.ityun.travel.domain;
  */
 public class Route {
     private int rid;
-    private String name;
+    private String rname;
     private Double price;
     private String routeIntroduce;
     private String rflag;
@@ -20,9 +20,9 @@ public class Route {
     public Route() {
     }
 
-    public Route(int rid, String name, Double price, String routeIntroduce, String rflag, String rdate, String isThemeTour, int count, int cid, String rimage, int sid, int sourceId) {
+    public Route(int rid, String rname, Double price, String routeIntroduce, String rflag, String rdate, String isThemeTour, int count, int cid, String rimage, int sid, int sourceId) {
         this.rid = rid;
-        this.name = name;
+        this.rname = rname;
         this.price = price;
         this.routeIntroduce = routeIntroduce;
         this.rflag = rflag;
@@ -43,12 +43,12 @@ public class Route {
         this.rid = rid;
     }
 
-    public String getName() {
-        return name;
+    public String getRname() {
+        return rname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRname(String rname) {
+        this.rname = rname;
     }
 
     public Double getPrice() {
@@ -135,7 +135,7 @@ public class Route {
     public String toString() {
         return "Route{" +
                 "rid=" + rid +
-                ", name='" + name + '\'' +
+                ", rname='" + rname + '\'' +
                 ", price=" + price +
                 ", routeIntroduce='" + routeIntroduce + '\'' +
                 ", rflag='" + rflag + '\'' +

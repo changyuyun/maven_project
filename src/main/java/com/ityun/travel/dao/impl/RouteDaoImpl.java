@@ -24,7 +24,7 @@ public class RouteDaoImpl implements RouteDao {
         }
         if (routeName != null && routeName.length() > 0) {
             stringBuilder.append(" and rname  like ?");
-            params.add(routeName);
+            params.add("%" + routeName + "%");
         }
         stringBuilder.append(" limit ?,?");
         params.add(start);
@@ -44,7 +44,7 @@ public class RouteDaoImpl implements RouteDao {
         }
         if (routeName != null && routeName.length() > 0) {
             stringBuilder.append(" and rname  like ?");
-            params.add(routeName);
+            params.add("%" + routeName + "%");
         }
         sql = stringBuilder.toString();
         return template.queryForObject(sql, Integer.class, params.toArray());
